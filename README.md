@@ -1,5 +1,6 @@
 # SpeechEmotionRecognition-papers-codes
-## Papers 
+
+### Papers 
 1. **3-D Convolutional Recurrent Neural Networks with Attention Model for Speech Emotion Recognition** *Mingyi Chen, Xuanji He, Jing Yang, and Han Zhang* [[paper]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/blob/master/papers/CRNN_IEMOCAP.pdf)
 
   > CRNN
@@ -22,13 +23,13 @@
   >
   > 使用KNN神经网络调参还没有复现，作者实现之后的准确率最高达到89.62%，数据集为柏林数据集，不过二者相差结果不大
 
-4. **Emotion Recognition from Chinese Speech for Smart Affective Services Using a Combination of SVM and DBN ** *Lianzhang Zhu, Leiming Chen, Dehai Zhao, Jiehan Zhou and Weishan Zhang*
+4. **Emotion Recognition from Chinese Speech for Smart Affective Services Using a Combination of SVM and DBN ** *Lianzhang Zhu, Leiming Chen, Dehai Zhao, Jiehan Zhou and Weishan Zhang* [[paper]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/blob/master/papers/SVM_DBN.pdf)
    
   > SVM + DBN
   >
   > 中文语音情感集，作者的准确度达到95.8%??
   
-## Codes
+### Codes
 1. 复现**Interpretazione affettiva di feature audio**的代码[[codes]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/tree/master/codes/PCA-SVM-KNN)
   
   > PCA + SVM + KNN
