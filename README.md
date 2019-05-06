@@ -1,5 +1,4 @@
 # SpeechEmotionRecognition-papers-codes
-
 ## Papers 
 1. **3-D Convolutional Recurrent Neural Networks with Attention Model for Speech Emotion Recognition** *Mingyi Chen, Xuanji He, Jing Yang, and Han Zhang* [[paper]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/blob/master/papers/CRNN_IEMOCAP.pdf)
 
@@ -42,4 +41,4 @@
   
   > 柏林数据集
   >
-  > 作者做好的准确率68.6%
+  > 作者最好的准确率68.6%
