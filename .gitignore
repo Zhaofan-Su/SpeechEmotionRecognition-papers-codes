@@ -1,3 +1,7 @@
 casia/
 Emo_DB/
 models/
+predicts
+scalers
+preFeatures
+*.pyc

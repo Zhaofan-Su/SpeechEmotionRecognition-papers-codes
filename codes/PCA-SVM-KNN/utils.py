@@ -1,15 +1,13 @@
 import os
 import librosa
 from random import shuffle
+import numpy as np
+import matplotlib.pyplot as plt
 
-path = r'C:\GitHub\speech_er_demo\casia'
 
-
-def getData():
+def getData(path):
     wav_file_path = []
-    # wavs = os.listdir(path)
-    # for wav in wavs:
-    #     wav_file_path.append(os.path.join(path, wav))
+
     person_dirs = os.listdir(path)
     for person in person_dirs:
         if person.endswith('txt'):
@@ -45,7 +43,23 @@ def get_max_min(files):
     return max_, min_
 
 
-# if __name__ == "__main__":
-#     files = getData()
-#     max, min = get_max_min(files)
-#     print(files[0])
+def draw(data_prob, class_labels: tuple, num_classes: int):
+    plt.clf()  # 清除刷新前的图表，防止数据量过大消耗内存
+    # 数据
+    angles = np.linspace(0, 2 * np.pi, num_classes, endpoint=False)
+    data = np.concatenate((data_prob, [data_prob[0]]))  # 闭合
+    angles = np.concatenate((angles, [angles[0]]))  # 闭合
+    fig = plt.figure(1)
+    # polar参数
+    ax = fig.add_subplot(111, polar=True)
+    ax.plot(angles, data, 'bo-', linewidth=2)
+    ax.fill(angles, data, facecolor='r', alpha=0.25)
+    ax.set_thetagrids(
+        angles * 180 / np.pi, class_labels, fontproperties="SimHei")
+    ax.set_title("Emotion Recognition", va='bottom', fontproperties="SimHei")
+    # 在这里设置雷达图的数据最大值
+    ax.set_rlim(0, 1)
+    ax.grid(True)
+    # plt.clf()  # 清除刷新前的图表，防止数据量过大消耗内存
+    # plt.show()
+    plt.pause(1)  # 暂停时间

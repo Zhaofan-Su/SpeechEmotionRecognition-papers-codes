@@ -1,11 +1,8 @@
 import librosa
 import librosa.display
 import numpy as np
-from utils import getData, get_max_min
-import pandas as pd
-import pickle
 
-EMOTION_LABEL = {
+EMOTION_LABEL_6 = {
     'angry': '生气',
     'fear': '害怕',
     'happy': '高兴',
@@ -13,6 +10,7 @@ EMOTION_LABEL = {
     'sad': '悲伤',
     'surprise': '惊讶'
 }
+EMOTION_LABEL_3 = {'neutral': '中性', 'positive': '正向', 'negative': '负向'}
 
 
 def extract_feature_data_augmentation(file_name, max_):
@@ -33,9 +31,9 @@ def extract_feature_data_augmentation(file_name, max_):
         X2, sample_rate)
 
 
-def extract_features(file, max_, pad=False):
+def extract_features(file, pad=False):
     X, sample_rate = librosa.load(file, sr=None)
-
+    max_ = X.shape[0] / sample_rate
     if pad:
         length = (max_ * sample_rate) - X.shape[0]
         X = np.pad(X, (0, int(length)), 'constant')
@@ -143,29 +141,21 @@ def analize_file_data_augmentation(f, mfcc_data):
     # fn = mypath + f
     ext_features1, ext_features2, ext_features3 = extract_feature_data_augmentation(
         f)
-    mfcc_data.append([f, ext_features1, EMOTION_LABEL[f.split('\\')[-2]]])
-    mfcc_data.append([f, ext_features2, EMOTION_LABEL[f.split('\\')[-2]]])
-    mfcc_data.append([f, ext_features3, EMOTION_LABEL[f.split('\\')[-2]]])
+    mfcc_data.append([f, ext_features1, EMOTION_LABEL_6[f.split('\\')[-2]]])
+    mfcc_data.append([f, ext_features2, EMOTION_LABEL_6[f.split('\\')[-2]]])
+    mfcc_data.append([f, ext_features3, EMOTION_LABEL_6[f.split('\\')[-2]]])
 
 
-def analize_file(f, max_, mfcc_data):
+def analize_file(f, max_, mfcc_data, label_num):
     # fn = mypath + f
     ext_features = extract_features(f, max_)
-    mfcc_data.append([f, ext_features, EMOTION_LABEL[f.split('\\')[-2]]])
-
-
-if __name__ == "__main__":
-    files = getData()
-    max_, min_ = get_max_min(files)
-    print(max_)
-    print(min_)
-    mfcc_data = []
-    for file in files:
-        analize_file(file, max_, mfcc_data)
-
-    print(mfcc_data[0])
-    cols = ['name', 'features', 'emotion']
-    mfcc_pd = pd.DataFrame(data=mfcc_data, columns=cols)
-
-    # 保存音频数据的特征
-    pickle.dump(mfcc_data, open('Features.p', 'wb'))
+    if label_num == '6':
+        mfcc_data.append([f, ext_features, EMOTION_LABEL_6[f.split('\\')[-2]]])
+    elif label_num == '3':
+        label = f.split('\\')[-2]
+        if label == 'angry' or label == 'fear':
+            mfcc_data.append([f, ext_features, EMOTION_LABEL_3['negative']])
+        elif label == 'happy' or label == 'surprise':
+            mfcc_data.append([f, ext_features, EMOTION_LABEL_3['positive']])
+        else:
+            mfcc_data.append([f, ext_features, EMOTION_LABEL_3['neutral']])
