@@ -60,6 +60,4 @@ def draw(data_prob, class_labels: tuple, num_classes: int):
     # 在这里设置雷达图的数据最大值
     ax.set_rlim(0, 1)
     ax.grid(True)
-    # plt.clf()  # 清除刷新前的图表，防止数据量过大消耗内存
-    # plt.show()
     plt.pause(1)  # 暂停时间

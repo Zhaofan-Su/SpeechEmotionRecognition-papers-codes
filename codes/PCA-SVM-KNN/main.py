@@ -1,13 +1,6 @@
 import argparse
 from Base import processing, train_svm, predict
 
-# 直接开始预测
-# 训练自己的模型
-# 导入训练的自己的模型进行预测
-# 合并感情？？
-# 是否开启雷达图
-# 是否输出预测结果
-
 
 def cmd():
 

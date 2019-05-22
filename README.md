@@ -22,8 +22,10 @@
   > 复现了代码，使用PCA对声音特征数据降维之后，再使用SVM，在中文语音数据集上准确率最高为77.8%
   >
   > 使用KNN神经网络调参还没有复现，作者实现之后的准确率最高达到89.62%，数据集为柏林数据集，不过二者相差结果不大
+  >
+  > 目前代码已经整理完成，具体使用方法参见[[README.md]]()
 
-4. **Emotion Recognition from Chinese Speech for Smart Affective Services Using a Combination of SVM and DBN ** *Lianzhang Zhu, Leiming Chen, Dehai Zhao, Jiehan Zhou and Weishan Zhang* [[paper]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/blob/master/papers/SVM_DBN.pdf)
+4. **Emotion Recognition from Chinese Speech for Smart Affective Services Using a Combination of SVM and DBN** *Lianzhang Zhu, Leiming Chen, Dehai Zhao, Jiehan Zhou and Weishan Zhang* [[paper]](https://github.com/Zhaofan-Su/SpeechEmotionRecognition-papers-codes/blob/master/papers/SVM_DBN.pdf)
    
   > SVM + DBN
   >

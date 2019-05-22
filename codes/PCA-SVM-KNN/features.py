@@ -55,7 +55,7 @@ def features(X, sample_rate):
     pitchmean = np.mean(pitch)
     pitchstd = np.std(pitch)
     pitchmax = np.max(pitch)
-    pitchmin = np.min(pitch)
+    # pitchmin = np.min(pitch)
 
     # 频谱质心
     cent = librosa.feature.spectral_centroid(y=X, sr=sample_rate)
