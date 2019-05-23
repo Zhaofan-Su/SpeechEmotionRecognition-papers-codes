@@ -11,6 +11,6 @@ class Config:
         self.PREDICT_PATH = os.path.join(self.BASE_DIR, 'predicts')
         self.SCALER_PATH = os.path.join(self.BASE_DIR, 'scalers')
         self.EMOTION_LABELS_6 = [
-            'angry', 'fear', 'happy', 'neutral', 'sad', 'surprise'
+            'neutral', 'fear', 'sad', 'surprise', 'angry', 'happy'
         ]
         self.EMOTION_LABELS_3 = ['neutral', 'positive', 'negative']

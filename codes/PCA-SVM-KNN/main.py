@@ -50,7 +50,7 @@ def cmd():
     elif option == 't':
         # 训练
         # 预处理保存音频数据的特征
-        features = processing(database, label_num, model_type)
+        features = processing(database, label_num, model_name, model_type)
         train_svm(database, features, label_num, model_name, model_type)
     else:
         print("Please choose the right option: p for predict, t for train")

@@ -25,7 +25,7 @@ def get_predicts_path(config):
     return predict_paths
 
 
-def processing(database, label_nums, model_type):
+def processing(database, label_nums, model_name, model_type):
     print(
         '------------------------------特征预处理开始------------------------------')
     config = Config(model_type)
@@ -43,7 +43,8 @@ def processing(database, label_nums, model_type):
         mfcc_data,
         open(
             config.BASE_DIR + '\\' + 'preFeatures' + '\\' +
-            path.split('\\')[-1] + '_features_' + label_nums + '.p', 'wb'))
+            path.split('\\')[-1] + '_' + model_name + '_features_' + label_nums
+            + '.p', 'wb'))
     print(
         '------------------------------特征预处理结束------------------------------')
     return mfcc_pd
