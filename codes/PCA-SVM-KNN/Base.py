@@ -12,6 +12,8 @@ from utils import draw, get_max_min, getData
 import os
 from features import extract_features, analize_file
 from config import Config
+import pyaudio
+import wave
 
 classfiers_num = 50
 nsplits = 10
@@ -147,8 +149,24 @@ def predict(database, model_name, label_num, radar, model_type):
         os.path.join(
             config.SCALER_PATH,
             database + '_' + model_name + '_scaler_' + label_num + '.m'))
+    p = pyaudio.PyAudio()
+
     for predict_path in predict_paths:
         print(predict_path)
+        # 语音播放
+        f = wave.open(predict_path, 'rb')
+        stream = p.open(
+            format=p.get_format_from_width(f.getsampwidth()),
+            channels=f.getnchannels(),
+            rate=f.getframerate(),
+            output=True)
+        data = f.readframes(f.getparams()[3])
+        stream.write(data)
+        stream.stop_stream()
+        stream.close()
+        f.close()
+
+        # 情感检测
         data_feature = extract_features(predict_path)
         feature = data_feature.flatten().reshape(1, 312)
         # 数据归一化
