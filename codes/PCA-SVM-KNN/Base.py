@@ -45,8 +45,8 @@ def processing(database, label_nums, model_name, model_type):
         mfcc_data,
         open(
             config.BASE_DIR + '\\' + 'preFeatures' + '\\' +
-            path.split('\\')[-1] + '_' + model_name + '_features_' + label_nums
-            + '.p', 'wb'))
+            path.split('\\')[-1] + '_' + model_name + '_features_' +
+            label_nums + '.p', 'wb'))
     print(
         '------------------------------特征预处理结束------------------------------')
     return mfcc_pd
@@ -155,11 +155,10 @@ def predict(database, model_name, label_num, radar, model_type):
         print(predict_path)
         # 语音播放
         f = wave.open(predict_path, 'rb')
-        stream = p.open(
-            format=p.get_format_from_width(f.getsampwidth()),
-            channels=f.getnchannels(),
-            rate=f.getframerate(),
-            output=True)
+        stream = p.open(format=p.get_format_from_width(f.getsampwidth()),
+                        channels=f.getnchannels(),
+                        rate=f.getframerate(),
+                        output=True)
         data = f.readframes(f.getparams()[3])
         stream.write(data)
         stream.stop_stream()
@@ -186,4 +185,8 @@ def predict(database, model_name, label_num, radar, model_type):
                 draw(
                     model.predict_proba(feature_std)[0],
                     np.array(config.EMOTION_LABELS_3), 3)
+            elif label_num == '7':
+                draw(
+                    model.predict_proba(feature_std)[0],
+                    np.array(config.EMOTION_LABELS_7), 7)
     print('------------------------------预测结束------------------------------')

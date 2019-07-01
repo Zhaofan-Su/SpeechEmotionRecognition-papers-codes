@@ -14,3 +14,6 @@ class Config:
             'neutral', 'fear', 'sad', 'surprise', 'angry', 'happy'
         ]
         self.EMOTION_LABELS_3 = ['neutral', 'positive', 'negative']
+        self.EMOTION_LABELS_6 = [
+            'neutral', 'fear', 'sad', 'boring', 'angry', 'happy', 'disgust'
+        ]

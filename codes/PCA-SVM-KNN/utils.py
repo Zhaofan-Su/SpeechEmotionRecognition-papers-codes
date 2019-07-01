@@ -8,22 +8,13 @@ import matplotlib.pyplot as plt
 def getData(path):
     wav_file_path = []
 
-    person_dirs = os.listdir(path)
-    for person in person_dirs:
-        if person.endswith('txt'):
-            continue
-        emotion_dir_path = os.path.join(path, person)
-        emotion_dirs = os.listdir(emotion_dir_path)
-        for emotion_dir in emotion_dirs:
-            if emotion_dir.endswith('.ini'):
-                continue
-            emotion_file_path = os.path.join(emotion_dir_path, emotion_dir)
-            emotion_files = os.listdir(emotion_file_path)
-            for file in emotion_files:
-                if not file.endswith('wav'):
-                    continue
-                wav_path = os.path.join(emotion_file_path, file)
-                wav_file_path.append(wav_path)
+    emotions = os.listdir(path)
+    for emotion in emotions:
+        emotion_dir = os.path.join(path, emotion)
+        files = os.listdir(emotion_dir)
+        for file in files:
+            wav_path = os.path.join(emotion_dir, file)
+            wav_file_path.append(wav_path)
 
     # 将语音文件随机排列
     shuffle(wav_file_path)
@@ -54,8 +45,9 @@ def draw(data_prob, class_labels: tuple, num_classes: int):
     ax = fig.add_subplot(111, polar=True)
     ax.plot(angles, data, 'bo-', linewidth=2)
     ax.fill(angles, data, facecolor='r', alpha=0.25)
-    ax.set_thetagrids(
-        angles * 180 / np.pi, class_labels, fontproperties="SimHei")
+    ax.set_thetagrids(angles * 180 / np.pi,
+                      class_labels,
+                      fontproperties="SimHei")
     ax.set_title("Emotion Recognition", va='bottom', fontproperties="SimHei")
     # 在这里设置雷达图的数据最大值
     ax.set_rlim(0, 1)

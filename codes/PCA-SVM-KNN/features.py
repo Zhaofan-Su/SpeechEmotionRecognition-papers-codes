@@ -11,6 +11,15 @@ EMOTION_LABEL_6 = {
     'surprise': '惊讶'
 }
 EMOTION_LABEL_3 = {'neutral': '中性', 'positive': '正向', 'negative': '负向'}
+EMOTION_LABEL_7 = {
+    'angry': '生气',
+    'boring': '无聊',
+    'disgust': '厌恶',
+    'fear': '害怕',
+    'happy': '高兴',
+    'neutral': '中性',
+    'sad': '悲伤'
+}
 
 
 def extract_feature_data_augmentation(file_name, max_):
@@ -44,8 +53,11 @@ def features(X, sample_rate):
     stft = np.abs(librosa.stft(X))
 
     # fmin和fmax对应于人类语音的最小最大基本频率
-    pitches, magnitudes = librosa.piptrack(
-        X, sr=sample_rate, S=stft, fmin=70, fmax=400)
+    pitches, magnitudes = librosa.piptrack(X,
+                                           sr=sample_rate,
+                                           S=stft,
+                                           fmin=70,
+                                           fmax=400)
     pitch = []
     for i in range(magnitudes.shape[1]):
         index = magnitudes[:, 1].argmax()
@@ -68,23 +80,24 @@ def features(X, sample_rate):
     flatness = np.mean(librosa.feature.spectral_flatness(y=X))
 
     # 使用系数为50的MFCC特征
-    mfccs = np.mean(
-        librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T, axis=0)
-    mfccsstd = np.std(
-        librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T, axis=0)
-    mfccmax = np.max(
-        librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T, axis=0)
+    mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T,
+                    axis=0)
+    mfccsstd = np.std(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T,
+                      axis=0)
+    mfccmax = np.max(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=50).T,
+                     axis=0)
 
     # 色谱图
-    chroma = np.mean(
-        librosa.feature.chroma_stft(S=stft, sr=sample_rate).T, axis=0)
+    chroma = np.mean(librosa.feature.chroma_stft(S=stft, sr=sample_rate).T,
+                     axis=0)
 
     # 梅尔频率
     mel = np.mean(librosa.feature.melspectrogram(X, sr=sample_rate).T, axis=0)
 
     # ottava对比
-    contrast = np.mean(
-        librosa.feature.spectral_contrast(S=stft, sr=sample_rate).T, axis=0)
+    contrast = np.mean(librosa.feature.spectral_contrast(S=stft,
+                                                         sr=sample_rate).T,
+                       axis=0)
 
     # 过零率
     zerocr = np.mean(librosa.feature.zero_crossing_rate(X))
@@ -106,19 +119,18 @@ def features(X, sample_rate):
         pitch_tuning_offset, meanrms, maxrms, stdrms
     ])
 
-    ext_features = np.concatenate((ext_features, mfccs, mfccsstd, mfccmax,
-                                   chroma, mel, contrast))
+    ext_features = np.concatenate(
+        (ext_features, mfccs, mfccsstd, mfccmax, chroma, mel, contrast))
 
     return ext_features
 
 
 def only_mfcc(X, sample_rate):
-    mfccs = librosa.feature.mfcc(
-        X,
-        sample_rate,
-        n_mfcc=13,
-        hop_length=int(0.010 * sample_rate),
-        n_fft=int(0.025 * sample_rate))
+    mfccs = librosa.feature.mfcc(X,
+                                 sample_rate,
+                                 n_mfcc=13,
+                                 hop_length=int(0.010 * sample_rate),
+                                 n_fft=int(0.025 * sample_rate))
     ext_features = mfccs[0]
     temp = ext_features.shape[0]
     for mfcc in mfccs:
@@ -128,8 +140,11 @@ def only_mfcc(X, sample_rate):
 
 def onlyPitch(X, sample_rate):
     stft = np.abs(librosa.stft(X))
-    pitches, magnitudes = librosa.piptrack(
-        X, sr=sample_rate, S=stft, fmin=70, fmax=400)
+    pitches, magnitudes = librosa.piptrack(X,
+                                           sr=sample_rate,
+                                           S=stft,
+                                           fmin=70,
+                                           fmax=400)
     pitch = []
     for i in range(magnitudes.shape[1]):
         index = magnitudes[:, i].argmax()
@@ -137,17 +152,9 @@ def onlyPitch(X, sample_rate):
     return np.asarray(pitch)
 
 
-def analize_file_data_augmentation(f, mfcc_data):
-    # fn = mypath + f
-    ext_features1, ext_features2, ext_features3 = extract_feature_data_augmentation(
-        f)
-    mfcc_data.append([f, ext_features1, EMOTION_LABEL_6[f.split('\\')[-2]]])
-    mfcc_data.append([f, ext_features2, EMOTION_LABEL_6[f.split('\\')[-2]]])
-    mfcc_data.append([f, ext_features3, EMOTION_LABEL_6[f.split('\\')[-2]]])
-
-
 def analize_file(f, max_, mfcc_data, label_num):
     # fn = mypath + f
+    print(f)
     ext_features = extract_features(f, max_)
     if label_num == '6':
         mfcc_data.append([f, ext_features, EMOTION_LABEL_6[f.split('\\')[-2]]])
@@ -159,3 +166,6 @@ def analize_file(f, max_, mfcc_data, label_num):
             mfcc_data.append([f, ext_features, EMOTION_LABEL_3['positive']])
         else:
             mfcc_data.append([f, ext_features, EMOTION_LABEL_3['neutral']])
+    elif label_num == '7':
+        mfcc_data.append([f, ext_features, EMOTION_LABEL_7[f.split('\\')[-2]]])
+    print(f, 'end')
